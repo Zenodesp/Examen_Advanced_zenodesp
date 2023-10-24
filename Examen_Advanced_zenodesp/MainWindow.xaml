@@ -73,23 +73,34 @@
                             <ListBox Style="{StaticResource ListStyle}" x:Name="lbComplaints" SelectionChanged="lbComplaints_SelectionChanged" >
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
-                                                <ColumnDefinition Width="200" />
-                                                <ColumnDefinition Width="100" />
-                                            </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" >
+
                                             <Label  Content="{Binding Path=employee.Name}"/>
                                             <Label Grid.Column="1" Content="{Binding Path=Description}"/>
                                             <Label Grid.Column="2" Content="{Binding Path=Date}"/>
-                                        </Grid>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Appointments">
-                        <Grid Background="#FFE5E5E5"/>
+                    <TabItem Header="Appointments" GotFocus="TabItem_GotFocus_1">
+                        <Grid Background="#FFE5E5E5">
+                            <ListBox x:Name="lbAppointments">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="{Binding Path=Description}"/>
+                                            <Label Content="{Binding Path=Employee}"/>
+                                            <Label Content="{Binding Path=Complaint}"/>
+                                            <Label Content="{Binding Path=Date}"/>
+                                        </StackPanel>
+                                            
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+                        </Grid>
                     </TabItem>
                     <TabItem Header="Complaint History" GotFocus="TabItem_GotFocus">
                         <Grid Background="#FFE5E5E5">
@@ -121,15 +132,17 @@
                 <Button Visibility="Hidden" x:Name="btAddComplaint" Click="btAddComplaint_Click"  >Add Complaint</Button>
                 <StackPanel x:Name="spAppointment" Visibility="Hidden">
                     <StackPanel>
-                    <Label FontWeight="Bold">Appointment Description:</Label>
-                    <TextBox Name="SpAppointmentDesc" Width="300"/>
-                    </StackPanel>
-                     <StackPanel>
-                    <Label FontWeight="Bold">Appointment Date:</Label>
-                    <TextBox Name="SpAppointmentDate" Width="300"/>
+                        <Label FontWeight="Bold">Appointment Description:</Label>
+                        <TextBox Name="SpAppointmentDesc" Width="300"/>
                     </StackPanel>
                     <StackPanel>
-                        
+                        <Label FontWeight="Bold">Employee:</Label>
+                        <TextBox Name="SpAppointmentEmployee" Width="300"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label FontWeight="Bold">Regarding:</Label>
+                        <TextBox Name="SpAppointmentComplaint" Width="300"/>
+                        <Button x:Name="btAddAppointment" Click="btAddAppointment_Click">Add Appointment</Button>
                     </StackPanel>
                 </StackPanel>
 
