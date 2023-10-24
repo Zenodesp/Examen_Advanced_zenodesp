@@ -1,0 +1,140 @@
+﻿<Window x:Class="Examen_Advanced_zenodesp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Examen_Advanced_zenodesp"
+        mc:Ignorable="d"
+        Title="Telenet General Human Resources Tool" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="MenuStyle" TargetType="Menu">
+            <Setter Property="Background" Value="BurlyWood"/>
+        </Style>
+        <Style x:Key="backgroundStyle" TargetType="StackPanel">
+            <Setter Property="Background" Value="#7FAB8C65"/>
+        </Style>
+        <Style x:Key="ListStyle" TargetType="ListBox">
+            <Setter Property="Background" Value="#BFAB8C65"/>
+        </Style>
+        <Style x:Key="TabStyle" TargetType="TabControl">
+            <Setter Property="Background" Value="BurlyWood"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel Style="{StaticResource backgroundStyle}">
+        <Grid Height="429">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+                
+                <Menu Style="{StaticResource MenuStyle}" Grid.ColumnSpan="2">
+                <MenuItem Header="Functions">
+                    <MenuItem Header="Shut Down"  Click="Shutdown_Click"/>
+                </MenuItem>
+                <MenuItem Header="Appointments"/>
+            </Menu>
+                
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <Label FontWeight="Bold" FontSize="20">Employees</Label>
+                <ListBox Style="{StaticResource ListStyle}" x:Name="lbEmployees" SelectionChanged="lbEmployees_SelectionChanged" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
+                                <Label  Content="{Binding Path=Name}"/>
+                                <Label Grid.Column="1" Content="{Binding Path=Department}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Name="spOmschrijving"  >
+                    <Label FontWeight="Bold">Department of Employee:</Label>
+                    <TextBox Name="tbEmployee" Width="150" LostFocus="TbEmployee_LostFocus"/>
+                </StackPanel>
+                <StackPanel x:Name="spDepartment" Visibility="Hidden">
+                    <Label FontWeight="Bold">Name of new employee:</Label>
+                    <TextBox Name="tbEmployeeDepartment" Width="150" />
+                </StackPanel>
+                <Button x:Name="btAddEmployee" Click="btAddEmployee_Click" >Add Employee</Button>
+            </StackPanel>
+            <StackPanel  Grid.Column="1" Grid.Row="1">
+                <TabControl Style="{StaticResource TabStyle}">
+                    
+                    <TabItem Header="Just Complaints">
+                        <Grid Background="#FFE5E5E5">
+                            <ListBox Style="{StaticResource ListStyle}" x:Name="lbComplaints" SelectionChanged="lbComplaints_SelectionChanged" >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="200" />
+                                                <ColumnDefinition Width="100" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label  Content="{Binding Path=employee.Name}"/>
+                                            <Label Grid.Column="1" Content="{Binding Path=Description}"/>
+                                            <Label Grid.Column="2" Content="{Binding Path=Date}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Appointments">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="Complaint History" GotFocus="TabItem_GotFocus">
+                        <Grid Background="#FFE5E5E5">
+                            <ScrollViewer Height="100">
+                                <ListBox x:Name="LinqList">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Content="{Binding Path=Emp}"/>
+                                                <Label Content="{Binding Path=Com}"/>
+                                                <Label Content="{Binding Path=Date}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                
+                <StackPanel Name="spEmployee"  Visibility="Hidden">
+                    <Label FontWeight="Bold">Employee:</Label>
+                    <TextBox Name="tbEmployee2" Width="150"  />
+                </StackPanel>
+                <StackPanel x:Name="spDescription" Visibility="Hidden">
+                    <Label FontWeight="Bold">Description:</Label>
+                    <TextBox Name="tbDescription" Width="300" />
+                </StackPanel>
+                <Button Visibility="Hidden" x:Name="btAddComplaint" Click="btAddComplaint_Click"  >Add Complaint</Button>
+                <StackPanel x:Name="spAppointment" Visibility="Hidden">
+                    <StackPanel>
+                    <Label FontWeight="Bold">Appointment Description:</Label>
+                    <TextBox Name="SpAppointmentDesc" Width="300"/>
+                    </StackPanel>
+                     <StackPanel>
+                    <Label FontWeight="Bold">Appointment Date:</Label>
+                    <TextBox Name="SpAppointmentDate" Width="300"/>
+                    </StackPanel>
+                    <StackPanel>
+                        
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+            <TextBlock x:Name="tbMessage" Grid.Row="2" Grid.Column="0"></TextBlock>
+        </Grid>
+    </StackPanel>
+</Window>
