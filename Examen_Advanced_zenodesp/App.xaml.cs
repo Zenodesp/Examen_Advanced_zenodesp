@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Examen_Advanced_zenodesp.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,8 @@ namespace Examen_Advanced_zenodesp
     /// </summary>
     public partial class App : Application
     {
+        internal static MainWindow mainWindow = null;
+        internal static MyDbContext context = null;
+        internal static Appointment appointment = null;
     }
 }

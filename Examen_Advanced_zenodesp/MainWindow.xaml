@@ -36,7 +36,7 @@
                 <MenuItem Header="Functions">
                     <MenuItem Header="Shut Down"  Click="Shutdown_Click"/>
                 </MenuItem>
-                <MenuItem Header="Appointments"/>
+                <MenuItem Header="Appointments" Click="MenuItem_Click"/>
             </Menu>
                 
             <StackPanel Grid.Column="0" Grid.Row="1">
