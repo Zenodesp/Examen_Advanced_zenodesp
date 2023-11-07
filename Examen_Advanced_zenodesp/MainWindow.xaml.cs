@@ -48,6 +48,9 @@ namespace Examen_Advanced_zenodesp
             complaints = context.Complaints.Where(c => c.Description != "-").ToList();
             lbComplaints.ItemsSource = complaints;
 
+            appointments = context.Appointments.Where(c => c.Description != "-").ToList();
+            lbAppointments.ItemsSource = appointments;
+
 
         }
 
@@ -210,13 +213,6 @@ namespace Examen_Advanced_zenodesp
             
         }
 
-        private void TabItem_GotFocus_1(object sender, RoutedEventArgs e)
-        {
-            
-            appointments = context.Appointments.Where(c => c.Description != "-").ToList();
-            lbAppointments.ItemsSource = appointments;
-            
-        }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -269,8 +265,8 @@ namespace Examen_Advanced_zenodesp
             {
                 selectedAppointment = appointments[lbAppointments.SelectedIndex];
                 spAppointment.Visibility = Visibility.Visible;
-                //SpAppointmentEmployee.Text = selectedAppointment.complaint.employee.Name;
-                //SpAppointmentComplaint.Text = selectedAppointment.complaint.Description;
+                SpAppointmentEmployee.Text = selectedAppointment.complaint.employee.Name;
+                SpAppointmentComplaint.Text = selectedAppointment.complaint.Description;
             }
             else
             {

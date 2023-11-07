@@ -16,6 +16,7 @@ namespace Examen_Advanced_zenodesp
         public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //be mindful to first change the server name to your own server name
             optionsBuilder.UseSqlServer(@"server=DESKTOP-LSB9S29\SQLEXPRESS;Database=Examen_Database;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true");
 
         }

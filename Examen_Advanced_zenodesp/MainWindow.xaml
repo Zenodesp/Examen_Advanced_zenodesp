@@ -77,7 +77,7 @@
                 <StackPanel.ContextMenu>
                     <ContextMenu>
                         <MenuItem Name="miDeleteComplaint" Header="Delete Complaint" Click="miDeleteComplaint_Click"/>
-                        <MenuItem Name="miDeleteAppointment" Header="Delete Appointment"/>
+                        <MenuItem Name="miDeleteAppointment" Header="Delete Appointment" Click="miDeleteAppointment_Click"/>
                     </ContextMenu>
                 </StackPanel.ContextMenu>
                 <TabControl Style="{StaticResource TabStyle}">
@@ -98,7 +98,7 @@
                             </ListBox>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Appointments" GotFocus="TabItem_GotFocus_1">
+                    <TabItem Header="Appointments">
                         <Grid Background="#FFE5E5E5">
                             <ListBox Style="{StaticResource ListStyle}" x:Name="lbAppointments" SelectionChanged="lbAppointments_SelectionChanged" >
                                 <ListBox.ItemTemplate>
