@@ -1,0 +1,31 @@
+﻿<Window x:Class="Examen_Advanced_zenodesp.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Examen_Advanced_zenodesp"
+        mc:Ignorable="d"
+        Title="Login" Height="200" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Login" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            <!--CoPilot-->
+        <TextBlock Text="Username" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="tbUsername" Grid.Column="1" Grid.Row="1" />
+
+        <TextBlock Text="Password" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <PasswordBox x:Name="tbPassword" Grid.Column="1" Grid.Row="2" />
+
+        <Button x:Name="btnLogin" Content="Login" Height="30" Width="100" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Click="btnLogin_Click"/>
+    </Grid>
+</Window>

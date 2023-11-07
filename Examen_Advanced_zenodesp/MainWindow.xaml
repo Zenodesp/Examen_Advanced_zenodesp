@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Examen_Advanced_zenodesp"
         mc:Ignorable="d"
-        Title="Telenet General Human Resources Tool" Height="450" Width="800">
+        Title="Telenet General Human Resources Tool" Height="500" Width="950">
     <Window.Resources>
         <Style x:Key="MenuStyle" TargetType="Menu">
             <Setter Property="Background" Value="BurlyWood"/>
@@ -21,11 +21,11 @@
         </Style>
     </Window.Resources>
     <StackPanel Style="{StaticResource backgroundStyle}">
-        <Grid Height="429">
+        <Grid Height="500">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
@@ -36,10 +36,18 @@
                 <MenuItem Header="Functions">
                     <MenuItem Header="Shut Down"  Click="Shutdown_Click"/>
                 </MenuItem>
-                <MenuItem Header="Appointments" Click="MenuItem_Click"/>
+                <MenuItem Name="registeritem" Header="Sign up" Click="MenuItem_Click_1" />
+                <MenuItem Name="signonitem" Header="Log In" Click="MenuItem_Click"/>
+                <MenuItem Name="loggedinitem" Visibility="Collapsed"/>
+                <MenuItem Name="signoffitem"  Header="Sign off" Visibility="Collapsed" Click="signoffitem_Click"/>
             </Menu>
                 
-            <StackPanel Grid.Column="0" Grid.Row="1">
+            <StackPanel x:Name="employeePanel" Grid.Column="0" Grid.Row="1" Visibility="Collapsed">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="miDeleteEmployee" Header="Delete Employee" Click="miDeleteEmployee_Click"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
                 <Label FontWeight="Bold" FontSize="20">Employees</Label>
                 <ListBox Style="{StaticResource ListStyle}" x:Name="lbEmployees" SelectionChanged="lbEmployees_SelectionChanged" >
                     <ListBox.ItemTemplate>
@@ -56,16 +64,22 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <StackPanel Name="spOmschrijving"  >
-                    <Label FontWeight="Bold">Department of Employee:</Label>
+                    <Label FontWeight="Bold">Name of new Employee:</Label>
                     <TextBox Name="tbEmployee" Width="150" LostFocus="TbEmployee_LostFocus"/>
                 </StackPanel>
-                <StackPanel x:Name="spDepartment" Visibility="Hidden">
-                    <Label FontWeight="Bold">Name of new employee:</Label>
+                <StackPanel x:Name="spDepartment">
+                    <Label FontWeight="Bold"> Department of new employee:</Label>
                     <TextBox Name="tbEmployeeDepartment" Width="150" />
                 </StackPanel>
                 <Button x:Name="btAddEmployee" Click="btAddEmployee_Click" >Add Employee</Button>
             </StackPanel>
-            <StackPanel  Grid.Column="1" Grid.Row="1">
+            <StackPanel x:Name="CompAppPanel"  Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="miDeleteComplaint" Header="Delete Complaint" Click="miDeleteComplaint_Click"/>
+                        <MenuItem Name="miDeleteAppointment" Header="Delete Appointment"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
                 <TabControl Style="{StaticResource TabStyle}">
                     
                     <TabItem Header="Just Complaints">
@@ -86,13 +100,13 @@
                     </TabItem>
                     <TabItem Header="Appointments" GotFocus="TabItem_GotFocus_1">
                         <Grid Background="#FFE5E5E5">
-                            <ListBox x:Name="lbAppointments">
+                            <ListBox Style="{StaticResource ListStyle}" x:Name="lbAppointments" SelectionChanged="lbAppointments_SelectionChanged" >
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="{Binding Path=Description}"/>
-                                            <Label Content="{Binding Path=Employee}"/>
-                                            <Label Content="{Binding Path=Complaint}"/>
+                                            <Label Content="{Binding Path=employee.Name}"/>
+                                            <Label Content="{Binding Path=complaint.Description}"/>
                                             <Label Content="{Binding Path=Date}"/>
                                         </StackPanel>
                                             
@@ -102,10 +116,10 @@
                             </ListBox>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Complaint History" GotFocus="TabItem_GotFocus">
+                    <TabItem  Header="Complaint History" GotFocus="TabItem_GotFocus">
                         <Grid Background="#FFE5E5E5">
                             <ScrollViewer Height="100">
-                                <ListBox x:Name="LinqList">
+                                <ListBox Style="{StaticResource ListStyle}" x:Name="LinqList">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -130,6 +144,7 @@
                     <TextBox Name="tbDescription" Width="300" />
                 </StackPanel>
                 <Button Visibility="Hidden" x:Name="btAddComplaint" Click="btAddComplaint_Click"  >Add Complaint</Button>
+                
                 <StackPanel x:Name="spAppointment" Visibility="Hidden">
                     <StackPanel>
                         <Label FontWeight="Bold">Appointment Description:</Label>
@@ -145,9 +160,10 @@
                         <Button x:Name="btAddAppointment" Click="btAddAppointment_Click">Add Appointment</Button>
                     </StackPanel>
                 </StackPanel>
+                
 
             </StackPanel>
-            <TextBlock x:Name="tbMessage" Grid.Row="2" Grid.Column="0"></TextBlock>
+            
         </Grid>
     </StackPanel>
 </Window>

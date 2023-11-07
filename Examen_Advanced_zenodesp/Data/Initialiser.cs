@@ -34,6 +34,18 @@ namespace Examen_Advanced_zenodesp.Data
                 });
                 context.SaveChanges();
             }
+
+            if (!context.Users.Any())
+            {
+                context.Add(new User
+                {
+                    //CoPilot
+                    Name= "-",
+                    Username = "-",
+                    Password = "-"
+                });
+                context.SaveChanges();
+            }
         }
     }
 }

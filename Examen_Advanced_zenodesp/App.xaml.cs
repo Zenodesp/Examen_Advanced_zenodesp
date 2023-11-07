@@ -15,7 +15,10 @@ namespace Examen_Advanced_zenodesp
     public partial class App : Application
     {
         internal static MainWindow mainWindow = null;
+        internal static MainWindow mainwindow = null;
         internal static MyDbContext context = null;
         internal static Appointment appointment = null;
+        internal static User user = null;
+        internal static String message = null;
     }
 }

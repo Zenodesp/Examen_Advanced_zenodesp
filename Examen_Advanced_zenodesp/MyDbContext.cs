@@ -13,6 +13,7 @@ namespace Examen_Advanced_zenodesp
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"server=DESKTOP-LSB9S29\SQLEXPRESS;Database=Examen_Database;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true");

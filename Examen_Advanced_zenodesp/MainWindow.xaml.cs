@@ -31,9 +31,12 @@ namespace Examen_Advanced_zenodesp
         Complaint selectedComplaint = null;
         Appointment selectedAppointment = null;
         MyDbContext context = new MyDbContext();
+        public bool deleted = false;
 
         public MainWindow()
         {
+            App.mainwindow = this;
+            App.context = context;
             Initialiser.InitialiseDatabase(context);
             InitializeComponent();
 
@@ -44,6 +47,8 @@ namespace Examen_Advanced_zenodesp
 
             complaints = context.Complaints.Where(c => c.Description != "-").ToList();
             lbComplaints.ItemsSource = complaints;
+
+
         }
 
         private void TbEmployee_LostFocus(object sender, RoutedEventArgs e)
@@ -53,8 +58,8 @@ namespace Examen_Advanced_zenodesp
 
         private void btAddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if(tbEmployeeDepartment.Text != "") 
-            { 
+            if (tbEmployeeDepartment.Text != "")
+            {
                 context.Add(new Employee
                 {
                     Name = tbEmployee.Text,
@@ -65,6 +70,10 @@ namespace Examen_Advanced_zenodesp
                 employees = context.Employees.Where(c => c.Name != "-").ToList();
                 lbEmployees.ItemsSource = employees;
             }
+            else {
+                App.message = "Something went wrong with your input!";
+                new popup().Show();
+            }
         }
 
         
@@ -73,16 +82,24 @@ namespace Examen_Advanced_zenodesp
 
         private void lbEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            spEmployee.Visibility = Visibility.Visible;
-            spDescription.Visibility = Visibility.Visible;
-            btAddComplaint.Visibility = Visibility.Visible;
-            selectedEmployee = employees[lbEmployees.SelectedIndex];
-            tbEmployee2.Text = selectedEmployee.Name;
+            if (!deleted)
+            {
+                spEmployee.Visibility = Visibility.Visible;
+                spDescription.Visibility = Visibility.Visible;
+                btAddComplaint.Visibility = Visibility.Visible;
+                selectedEmployee = employees[lbEmployees.SelectedIndex];
+                tbEmployee2.Text = selectedEmployee.Name;
+            } else
+            {
+                deleted = false;
+
+            }
+            
         }
 
         private void btAddComplaint_Click(object sender, RoutedEventArgs e)
         {
-            try { 
+            
 
             if (selectedComplaint == null)
             {
@@ -96,32 +113,43 @@ namespace Examen_Advanced_zenodesp
             }
             else
             {
-
-                selectedComplaint.employee = selectedEmployee;
-                selectedComplaint.Description = tbDescription.Text;
-                context.Update(selectedComplaint);
+                if (tbEmployee2.Text == "")
+                {
+                    App.message = "There is something wrong with your input!";
+                    new popup().Show();
+                } else
+                {
+                    selectedComplaint.employee = selectedEmployee;
+                    selectedComplaint.Description = tbDescription.Text;
+                    context.Update(selectedComplaint);
+                }
+                
             }
             context.SaveChanges();
             tbDescription.Text = "";
             complaints = context.Complaints.Where(c => c.Description != "-").ToList();
             lbComplaints.ItemsSource = complaints;
-            }
-            catch
-            {
-                tbMessage.Text = "A problem has occurred. Please retry or edit your input.";
-            }
+            
         }
 
         private void lbComplaints_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //display the description and employee name of the selected complaint in the textbox tbDescription
-            selectedComplaint = complaints[lbComplaints.SelectedIndex];
-            tbDescription.Text = selectedComplaint.Description;
-            tbEmployee2.Text = selectedComplaint.employee.Name;
+            if (!deleted) 
+            {
+                //display the description and employee name of the selected complaint in the textbox tbDescription
+                selectedComplaint = complaints[lbComplaints.SelectedIndex];
+                tbDescription.Text = selectedComplaint.Description;
+                tbEmployee2.Text = selectedComplaint.employee.Name;
 
-            spAppointment.Visibility = Visibility.Visible;
-            SpAppointmentEmployee.Text = selectedComplaint.employee.Name;
-            SpAppointmentComplaint.Text = selectedComplaint.Description;
+                spAppointment.Visibility = Visibility.Visible;
+                SpAppointmentEmployee.Text = selectedComplaint.employee.Name;
+                SpAppointmentComplaint.Text = selectedComplaint.Description;
+            } 
+            else 
+            { 
+                deleted = false; 
+            }
+            
 
 
         }
@@ -148,12 +176,11 @@ namespace Examen_Advanced_zenodesp
 
         private void btAddAppointment_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            
                 //this function was autogenerated by CoPilot, up until the catch block
                 if (selectedAppointment == null)
                 {
-                    DateTime t = DateTime.Now;
+                    
                     context.Add(new Appointment
                     {
                         
@@ -165,31 +192,90 @@ namespace Examen_Advanced_zenodesp
                 }
                 else
                 {
+                    if(SpAppointmentDesc.Text == "")
+                {
+                        App.message = "There is something wrong with your input!";
+                        new popup().Show();
+                    } else { 
                     selectedAppointment.employee = selectedComplaint.employee;
                     selectedAppointment.complaint = selectedComplaint;
                     selectedAppointment.Description = SpAppointmentDesc.Text;
                     context.Update(selectedAppointment);
                 }
+            }
                 context.SaveChanges();
                 SpAppointmentDesc.Text = "";
-                tbMessage.Text = "Appointment added successfully.";
                 appointments = context.Appointments.Where(c => c.Description != "-").ToList();
                 lbAppointments.ItemsSource = appointments;
-            }
-            catch
-            {
-                tbMessage.Text = "A problem has occurred. Please retry or edit your input.";
-            }
+            
         }
 
         private void TabItem_GotFocus_1(object sender, RoutedEventArgs e)
         {
+            
             appointments = context.Appointments.Where(c => c.Description != "-").ToList();
             lbAppointments.ItemsSource = appointments;
+            
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            new Login().Show();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            new Register().Show();
+        }
+
+        private void signoffitem_Click(object sender, RoutedEventArgs e)
+        {
+            App.user = null;
+            signoffitem.Visibility = Visibility.Collapsed;
+            signonitem.Visibility = Visibility.Visible;
+            registeritem.Visibility = Visibility.Visible;
+            loggedinitem.Visibility = Visibility.Collapsed;
+            App.mainwindow.employeePanel.Visibility = Visibility.Collapsed;
+            App.mainwindow.CompAppPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void miDeleteEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            context.Remove(selectedEmployee);
+            context.SaveChanges();
+            deleted = true;
+            lbEmployees.ItemsSource = context.Employees.Where(c => c.Name != "-").ToList();
+        }
+        //this first delete function was entirely self-programmed, the rest was generated by CoPilot based on the first one
+        private void miDeleteComplaint_Click(object sender, RoutedEventArgs e)
+        {
+            context.Remove(selectedComplaint);
+            context.SaveChanges();
+            deleted = true;
+            lbComplaints.ItemsSource = context.Complaints.Where(c => c.Description != "-").ToList();
+        }
+
+        private void miDeleteAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            context.Remove(selectedAppointment);
+            context.SaveChanges();
+            deleted = true;
+            lbAppointments.ItemsSource = context.Appointments.Where(c => c.Description != "-").ToList();
+        }
+
+        private void lbAppointments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!deleted)
+            {
+                selectedAppointment = appointments[lbAppointments.SelectedIndex];
+                spAppointment.Visibility = Visibility.Visible;
+                //SpAppointmentEmployee.Text = selectedAppointment.complaint.employee.Name;
+                //SpAppointmentComplaint.Text = selectedAppointment.complaint.Description;
+            }
+            else
+            {
+                deleted = false;
+            }
             
         }
     }
