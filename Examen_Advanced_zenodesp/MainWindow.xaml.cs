@@ -265,7 +265,7 @@ namespace Examen_Advanced_zenodesp
             {
                 selectedAppointment = appointments[lbAppointments.SelectedIndex];
                 spAppointment.Visibility = Visibility.Visible;
-                SpAppointmentEmployee.Text = selectedAppointment.complaint.employee.Name;
+                SpAppointmentEmployee.Text = selectedAppointment.employee.Name;
                 SpAppointmentComplaint.Text = selectedAppointment.complaint.Description;
             }
             else
